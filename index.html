@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Pembelajaran </title>
+    <!-- Menghubungkan file CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 1. Halaman Awal -->
+        <div id="home-screen" class="view active">
+            <!-- Navbar dengan Menu Hamburger -->
+            <nav class="navbar">
+                <div class="logo"></div> <!-- Dibiarkan kosong agar menu ada di kanan -->
+                <div class="hamburger-container">
+                    <button class="hamburger-icon" onclick="toggleMenu()">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <!-- Dropdown Menu -->
+                    <div id="guru-dropdown" class="dropdown-content">
+                        <button onclick="showView('teacher-login')" class="btn-menu">Masuk sebagai Guru</button>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Hero Section (Konten Utama) -->
+            <div class="hero-section">
+                <!-- Bagian Kiri: Teks dan Tombol -->
+                <div class="hero-text">
+                    <p class="subtitle">BELAJAR SAMBIL BERMAIN</p>
+                    <h1 class="title">Game Pembelajaran</h1>
+                    <p class="description">Uji pengetahuanmu melalui kuis interaktif dan dapatkan skor terbaikmu.</p>
+                    
+                    <button onclick="showView('student-login')" class="btn-primary btn-large">Mulai Kuis Sekarang</button>
+                    
+                    <div class="notice-box">
+                        <p>Ayoo kerjakan kuis dengan jujur dan teliti!!!</p>
+                    </div>
+                </div>
+
+                <!-- Bagian Kanan: Ilustrasi CSS  -->
+                <div class="hero-image">
+                    <div class="illustration-wrapper">
+                        <div class="blob blob-yellow"></div>
+                        <div class="blob blob-green"></div>
+                        <div class="quiz-mockup">
+                            <span class="badge">SOAL 2 DARI 4</span>
+                            <div class="mock-line"></div>
+                            <div class="mock-line short"></div>
+                            <div class="mock-option">A &nbsp; Monitor</div>
+                            <div class="mock-option active">B &nbsp; Keyboard</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Login Guru  -->
+        <div id="teacher-login" class="view">
+            <h2>Login Guru</h2>
+            <input type="text" id="username" placeholder="Username">
+            <input type="password" id="password" placeholder="Password">
+            <button id="btn-login-guru" class="btn-primary">Masuk</button>
+            <button onclick="showView('home-screen')" class="btn-outline">Kembali</button>
+        </div>
+
+        <div id="teacher-dashboard" class="view">
+        <!-- 3. Dashboard Guru -->
+        <div class="dashboard-header">
+                <div>
+                    <span class="badge-tag">MODE GURU · PROTOTYPE</span>
+                    <h2>Dashboard Guru</h2>
+                    <p>Kelola soal dan pantau hasil belajar siswa yang tersimpan di cloud.</p>
+                </div>
+                <button onclick="logout()" class="btn-outline-danger">Keluar</button>
+            </div>
+
+            <!-- Tombol Navigasi Tab -->
+            <div class="tab-navigation">
+                <button onclick="switchTeacherTab('tab-ringkasan')" id="btn-tab-ringkasan" class="tab-btn active">Dashboard</button>
+                <button onclick="switchTeacherTab('tab-kelola-soal')" id="btn-tab-kelola-soal" class="tab-btn">Kelola Soal</button>
+                <button onclick="switchTeacherTab('tab-hasil-siswa')" id="btn-tab-hasil-siswa" class="tab-btn">Hasil Siswa</button>
+            </div>
+
+            <!-- TAB 1: RINGKASAN DASHBOARD -->
+            <div id="tab-ringkasan" class="tab-content active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <p class="stat-title">Total Soal</p>
+                        <h3 id="stat-total-soal">0</h3>
+                    </div>
+                    <div class="stat-card">
+                        <p class="stat-title">Total Siswa Selesai</p>
+                        <h3 id="stat-total-siswa">0</h3>
+                    </div>
+                    <div class="stat-card">
+                        <p class="stat-title">Nilai Rata-rata</p>
+                        <h3 id="stat-rata-rata">0</h3>
+                    </div>
+                    <div class="stat-card">
+                        <p class="stat-title">Nilai Tertinggi</p>
+                        <h3 id="stat-tertinggi">0</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: KELOLA SOAL -->
+            <div id="tab-kelola-soal" class="tab-content">
+                <div class="grid-2-col">
+                    <!-- Form Input Soal -->
+                    <div class="card-box">
+                        <h3>Tambah atau edit soal</h3>
+                        <p class="sub-text">Setiap soal harus memiliki tepat empat pilihan jawaban.</p>
+                        
+                        <input type="hidden" id="soal-id">
+                        
+                        <div class="form-group">
+                            <label>Pertanyaan</label>
+                            <textarea id="pertanyaan" rows="3" placeholder="Ketik pertanyaan..."></textarea>
+                        </div>
+
+                        <div class="grid-inputs">
+                            <div class="form-group">
+                                <label>A. Pilihan A</label>
+                                <input type="text" id="pilihan-a">
+                            </div>
+                            <div class="form-group">
+                                <label>B. Pilihan B</label>
+                                <input type="text" id="pilihan-b">
+                            </div>
+                            <div class="form-group">
+                                <label>C. Pilihan C</label>
+                                <input type="text" id="pilihan-c">
+                            </div>
+                            <div class="form-group">
+                                <label>D. Pilihan D</label>
+                                <input type="text" id="pilihan-d">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Jawaban Benar</label>
+                            <select id="jawaban-benar">
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Waktu Kuis (Menit)</label>
+                            <input type="number" id="waktu-kuis" value="5" min="1" placeholder="Masukkan durasi kuis (menit)">
+                        </div>
+
+                        <button onclick="simpanSoal()" class="btn-primary">Simpan Soal</button>
+                    </div>
+
+                    <!-- Daftar Soal -->
+                    <div class="card-box">
+                        <h3>Daftar Soal</h3>
+                        <p class="sub-text">Gunakan Edit untuk memperbarui dan Hapus untuk menghapus soal.</p>
+                        <div id="daftar-soal" class="soal-list-container"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: HASIL SISWA -->
+            <div id="tab-hasil-siswa" class="tab-content">
+                <div class="card-box">
+                    <h3>Hasil Siswa</h3>
+                    <p class="sub-text">Pantau riwayat nilai kuis siswa secara real-time.</p>
+
+                    <table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>NO</th>
+                                <th>NAMA SISWA</th>
+                                <th>BENAR</th>
+                                <th>SALAH</th>
+                                <th>NILAI</th>
+                                <th>STATUS</th>
+                            </tr>
+                        </thead>
+                        <tbody id="data-hasil">
+                            <!-- Data siswa otomatis terisi via Firebase -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- 4. Login Siswa -->
+        <div id="student-login" class="view">
+            <h2>Masukkan Nama Kamu</h2>
+            <input type="text" id="nama-siswa" placeholder="Nama Lengkap">
+            <button onclick="mulaiKuis()" class="btn-secondary">Mulai Kuis</button>
+            <button onclick="showView('home-screen')" class="btn-outline">Kembali</button>
+        </div>
+
+        <!-- 5. Halaman Kuis Siswa -->
+        <div id="quiz-screen" class="view">
+            <header class="quiz-header">
+                <p>Siswa: <span id="quiz-nama-siswa"></span></p>
+                <p class="timer">Waktu: <span id="quiz-timer">00:00</span></p>
+            </header>
+            <div class="progress">Soal <span id="quiz-progress">1</span> dari <span id="quiz-total"></span></div>
+            
+            <div class="card">
+                <h3 id="quiz-pertanyaan">Pertanyaan disini</h3>
+                <div id="quiz-options" class="options-container">
+                    <!-- Tombol pilihan digenerate dari JS -->
+                </div>
+            </div>
+            <button onclick="nextSoal()" id="btn-next" class="btn-secondary" disabled>Lanjut</button>
+        </div>
+
+        <!-- 6. Halaman Hasil Siswa -->
+        <div id="result-screen" class="view">
+            <h2>Kuis Selesai!</h2>
+            <div class="card result-card">
+                <p>Nama: <span id="res-nama"></span></p>
+                <p>Jawaban Benar: <span id="res-benar"></span></p>
+                <p>Jawaban Salah: <span id="res-salah"></span></p>
+                <h3>Nilai Akhir: <span id="res-nilai"></span></h3>
+            </div>
+            <button onclick="showView('home-screen')" class="btn-primary">Kembali ke Beranda</button>
+        </div>
+    </div>
+    
+    <!-- Menghubungkan file JavaScript -->
+    <script src="script.js"></script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDjMiRhdKUugJJsz2OqYDIZr5zv0m5huKc",
+            authDomain: "quiz-pembelajaran.firebaseapp.com",
+            projectId: "quiz-pembelajaran",
+            storageBucket: "quiz-pembelajaran.firebasestorage.app",
+            messagingSenderId: "187253129002",
+            appId: "1:187253129002:web:b3f328f43b604fae67a853"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Inisialisasi Firestore & Ekspor Fungsi ke Window agar bisa dipakai di script.js
+        window.db = getFirestore(app);
+        window.fsFunctions = { collection, addDoc, getDocs, doc, deleteDoc, updateDoc, onSnapshot };
+
+        // Fungsi Login
+        document.getElementById("btn-login-guru").addEventListener("click", async () => {
+            const email = document.getElementById("username").value; 
+            const password = document.getElementById("password").value;
+
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                
+                if (typeof showView === 'function') {
+                    if (typeof renderTeacherDashboard === 'function') {
+                        renderTeacherDashboard();
+                    }
+                    showView('teacher-dashboard');
+                }
+            } catch (error) {
+                console.error(error);
+                alert("Login gagal. Periksa email dan password.: " + error.message); // Menampilkan alert pop-up jika gagal
+            }
+        });
+    </script>
+
+</body>
+</html>

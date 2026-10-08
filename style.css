@@ -1,0 +1,567 @@
+/* Mengatur font dan reset margin dasar */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f0f4f8;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.app-container {
+    background: #ffffff;
+    width: 100%;
+    max-width: 800px;
+    min-height: 90vh;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    padding: 30px;
+    overflow: hidden;
+}
+
+/* Mengatur visibilitas halaman (Single Page App) */
+.view {
+    display: none;
+    animation: fadeIn 0.4s ease-in-out;
+}
+.view.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Tipografi dan Form */
+h1, h2, h3 { color: #2c3e50; margin-bottom: 15px; text-align: center; }
+p { text-align: center; margin-bottom: 20px; color: #555; }
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+}
+
+/* Gaya Tombol */
+button {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-primary { background-color: #3498db; color: white; }
+.btn-primary:hover { background-color: #2980b9; }
+
+.btn-secondary { background-color: #2ecc71; color: white; }
+.btn-secondary:hover { background-color: #27ae60; }
+
+.btn-danger { background-color: #e74c3c; color: white; }
+.btn-outline { background-color: transparent; border: 2px solid #bdc3c7; color: #7f8c8d; }
+
+button:disabled { background-color: #bdc3c7; cursor: not-allowed; }
+
+/* Komponen Card */
+.card {
+    background: #f9fbfd;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #e1e8ed;
+    margin-bottom: 20px;
+}
+
+/* Pilihan Jawaban Kuis */
+.options-container button {
+    background-color: white;
+    border: 2px solid #ddd;
+    color: #333;
+    text-align: left;
+    padding: 15px;
+}
+.options-container button:hover:not(:disabled) { border-color: #3498db; }
+.options-container button.selected {
+    background-color: #3498db;
+    color: white;
+    border-color: #3498db;
+}
+
+/* Tabel */
+.table-responsive { overflow-x: auto; }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+th { background-color: #f2f2f2; }
+
+/* Kuis Header & Timer */
+.quiz-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.timer { color: #e74c3c; }
+.progress { text-align: center; margin-bottom: 20px; font-weight: bold; color: #3498db; }
+
+/* =========================================
+   STYLE KHUSUS HALAMAN AWAL (HERO SECTION)
+   ========================================= */
+
+/* Navbar & Hamburger Menu */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    position: relative;
+    z-index: 10;
+}
+
+.hamburger-container {
+    position: relative;
+    margin-left: auto;
+}
+
+.hamburger-icon {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 40px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.hamburger-icon span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: #1e5482;
+    border-radius: 2px;
+    transition: 0.3s;
+}
+
+.hamburger-icon:hover {
+    background-color: #f0f4f8;
+}
+
+/* Dropdown Menu */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 50px;
+    background-color: #ffffff;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    border: 1px solid #e1e8ed;
+    overflow: hidden;
+    animation: fadeInDown 0.3s ease;
+}
+
+.dropdown-content.show {
+    display: block;
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.btn-menu {
+    background: transparent;
+    color: #1e5482;
+    margin: 0;
+    border-radius: 0;
+    text-align: left;
+    padding: 15px 20px;
+}
+
+.btn-menu:hover {
+    background-color: #f0f4f8;
+}
+
+/* Layout Hero Section */
+.hero-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+    margin-top: 10px;
+}
+
+/* Bagian Kiri */
+.hero-text {
+    text-align: left;
+}
+
+.subtitle {
+    color: #165b8f;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.title {
+    color: #1c3553;
+    font-size: 2.8rem;
+    font-family: 'Georgia', serif; /* Font serif seperti di gambar */
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.description {
+    color: #64748b;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.btn-large {
+    background-color: #1e6eb5;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    border-radius: 10px;
+    width: auto;
+    display: inline-block;
+}
+
+.btn-large:hover {
+    background-color: #165b8f;
+}
+
+.notice-box {
+    background-color: #fffbef;
+    border: 1px solid #fce8a1;
+    border-radius: 12px;
+    padding: 15px 20px;
+    margin-top: 30px;
+}
+
+.notice-box p {
+    color: #9c7318;
+    margin: 0;
+    font-size: 0.95rem;
+    text-align: left;
+}
+
+/* Bagian Kanan (Ilustrasi CSS) */
+.hero-image {
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.illustration-wrapper {
+    background-color: #e3f2fd;
+    width: 100%;
+    height: 350px;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.blob {
+    position: absolute;
+    border-radius: 50%;
+}
+
+.blob-yellow {
+    background-color: #ffca28;
+    width: 250px;
+    height: 250px;
+    top: -50px;
+    right: -50px;
+}
+
+.blob-green {
+    background-color: #80cbc4;
+    width: 200px;
+    height: 200px;
+    bottom: -60px;
+    left: -40px;
+}
+
+.quiz-mockup {
+    background: white;
+    width: 80%;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    position: relative;
+    z-index: 2;
+    transform: rotate(-2deg);
+}
+
+.quiz-mockup .badge {
+    background-color: #e0f2f1;
+    color: #00796b;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.mock-line {
+    height: 12px;
+    background-color: #e1e8ed;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+.mock-line.short { width: 60%; margin-bottom: 25px; }
+
+.mock-option {
+    border: 1px solid #e1e8ed;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    color: #2c3e50;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.mock-option.active {
+    background-color: #e3f2fd;
+    border-color: #2196f3;
+    color: #0d47a1;
+}
+
+/* Responsif untuk Smartphone */
+@media (max-width: 768px) {
+    .hero-section {
+        grid-template-columns: 1fr;
+    }
+    .title {
+        font-size: 2.2rem;
+    }
+    .illustration-wrapper {
+        height: 250px;
+    }
+}
+
+/*   STYLE DASHBOARD GURU  */
+
+/* Header & Tag Badge */
+.badge-tag {
+    font-size: 11px;
+    font-weight: 700;
+    color: #1e6eb5;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.dashboard-header h2 {
+    text-align: left;
+    margin-bottom: 5px;
+    font-family: 'Georgia', serif;
+    font-size: 2rem;
+    color: #1c3553;
+}
+
+.dashboard-header p {
+    text-align: left;
+    margin-bottom: 0;
+    font-size: 0.95rem;
+}
+
+/* Tombol Outlined Merah */
+.btn-outline-danger {
+    background-color: transparent;
+    border: 1px solid #fca5a5;
+    color: #dc2626;
+    padding: 8px 16px;
+    width: auto;
+}
+.btn-outline-danger:hover {
+    background-color: #fef2f2;
+}
+
+/* Navigasi Tab (Dashboard, Kelola Soal, Hasil Siswa) */
+.tab-navigation {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #e1e8ed;
+    padding-bottom: 12px;
+}
+
+.tab-btn {
+    background: #f0f4f8;
+    border: 1px solid transparent;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    color: #475569;
+    cursor: pointer;
+    width: auto;
+    margin-bottom: 0;
+}
+
+.tab-btn.active {
+    background-color: #ffffff;
+    color: #1c3553;
+    border-color: #cbd5e1;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Konten Tab (Visibilitas) */
+.tab-content {
+    display: none;
+}
+.tab-content.active {
+    display: block;
+}
+
+/* Ringkasan Kartu Statistik */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 15px;
+}
+
+.stat-card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #e1e8ed;
+    text-align: left;
+}
+
+.stat-title {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 10px;
+    font-weight: 600;
+    text-align: left;
+}
+
+.stat-card h3 {
+    font-size: 32px;
+    color: #1c3553;
+    margin: 0;
+    text-align: left;
+}
+
+/* Tata Letak 2 Kolom (Kelola Soal) */
+.grid-2-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.card-box {
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid #e1e8ed;
+    text-align: left;
+}
+
+.card-box h3 {
+    text-align: left;
+    margin-bottom: 5px;
+    font-size: 1.25rem;
+}
+
+.sub-text {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.grid-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 5px;
+}
+
+/* Container Soal */
+.soal-list-container {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+/* Tag Status */
+.badge-success {
+    background: #dcfce7;
+    color: #15803d;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Responsif untuk Layar Kecil */
+@media (max-width: 768px) {
+    .grid-2-col {
+        grid-template-columns: 1fr;
+    }
+    .grid-inputs {
+        grid-template-columns: 1fr;
+    }
+    .dashboard-header {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
