@@ -1,3 +1,14 @@
+// --- EFEK SUARA GAME ---
+const soundBenar = new Audio('sound correct.mp3');
+const soundSalah = new Audio('sound incorrect.mp3');
+const soundSelesai = new Audio('sound selesai.mp3');
+
+// Fungsi pembantu untuk memutar suara
+function playSound(audio) {
+    audio.currentTime = 0; // Reset durasi dari awal
+    audio.play().catch(err => console.log("Audio play blocked by browser policy"));
+}
+
 // --- MANAJEMEN STATE & LOCALSTORAGE ---
 // Menyimpan data di browser agar tidak hilang saat direfresh
 let questions = JSON.parse(localStorage.getItem('quiz_questions')) || [];
@@ -307,15 +318,26 @@ function renderKuis() {
 }
 
 function pilihJawaban(jawaban, btnElement) {
+    // Simpan jawaban siswa
     studentAnswers[currentQuestionIndex] = jawaban;
     
-    // Hapus class 'selected' dari semua tombol pilihan
+    // Ambil soal yang sedang diuji
+    const soalSaatIni = questions[currentQuestionIndex];
+
+    // Cek apakah pilihan siswa sama dengan jawaban yang benar
+    if (jawaban === soalSaatIni.jawabanBenar) {
+        playSound(soundBenar); // Bunyi efek benar
+    } else {
+        playSound(soundSalah); // Bunyi efek salah
+    }
+
+    // Hapus efek warna 'selected' pada pilihan lain
     const buttons = document.getElementById('quiz-options').getElementsByTagName('button');
     for (let btn of buttons) {
         btn.classList.remove('selected');
     }
     
-    // Tambah class 'selected' pada yang diklik
+    // Beri efek warna 'selected' pada tombol yang baru diklik
     btnElement.classList.add('selected');
     
     // Aktifkan tombol Lanjut
@@ -334,6 +356,9 @@ function nextSoal() {
 // ---  SIMPAN JAWABAN KE CLOUD & HITUNG NILAI ---
 async function selesaiKuis() {
     clearInterval(timerInterval);
+
+    // Play suara kuis selesai
+    playSound(soundSelesai);
 
     let benar = 0;
     questions.forEach((q, index) => {
