@@ -371,3 +371,31 @@ async function selesaiKuis() {
     }
 }
 
+// --- FUNGSI RESET SELURUH HASIL SISWA ---
+async function resetHasilSiswa() {
+    const konfirmasi = confirm("Yakin ingin menghapus seluruh data hasil siswa? Data yang dihapus tidak bisa dikembalikan.");
+    if (!konfirmasi) return;
+
+    try {
+        // Ambil seluruh dokumen dari koleksi 'results'
+        const querySnapshot = await window.fsFunctions.getDocs(window.fsFunctions.collection(window.db, "results"));
+        
+        if (querySnapshot.empty) {
+            alert("Tidak ada data hasil siswa yang bisa dihapus.");
+            return;
+        }
+
+        // Hapus setiap dokumen satu per satu
+        const deletePromises = [];
+        querySnapshot.forEach((docSnap) => {
+            const docRef = window.fsFunctions.doc(window.db, "results", docSnap.id);
+            deletePromises.push(window.fsFunctions.deleteDoc(docRef));
+        });
+
+        await Promise.all(deletePromises);
+        alert("Seluruh data hasil siswa berhasil di-reset!");
+    } catch (error) {
+        console.error("Gagal menghapus data hasil siswa:", error);
+        alert("Terjadi kesalahan saat menghapus data.");
+    }
+}

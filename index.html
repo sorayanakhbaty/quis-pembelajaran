@@ -172,9 +172,15 @@
             <!-- TAB 3: HASIL SISWA -->
             <div id="tab-hasil-siswa" class="tab-content">
                 <div class="card-box">
-                    <h3>Hasil Siswa</h3>
-                    <p class="sub-text">Pantau riwayat nilai kuis siswa secara real-time.</p>
-
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                         <div>
+                            <h3>Hasil Siswa</h3>
+                            <p class="sub-text" style="margin-bottom: 0;">Pantau riwayat nilai kuis siswa secara real-time.</p>
+                        </div>
+                        <!-- Tombol Reset Hasil -->
+                        <button onclick="resetHasilSiswa()" class="btn-outline-danger" style="width: auto; margin-bottom: 0;">Reset Hasil Siswa</button>
+                    </div>
+                    
                     <table class="styled-table">
                         <thead>
                             <tr>
