@@ -321,26 +321,34 @@ function pilihJawaban(jawaban, btnElement) {
     // Simpan jawaban siswa
     studentAnswers[currentQuestionIndex] = jawaban;
     
-    // Ambil soal yang sedang diuji
+    // Ambil soal yang sedang dikerjakan
     const soalSaatIni = questions[currentQuestionIndex];
 
-    // Cek apakah pilihan siswa sama dengan jawaban yang benar
-    if (jawaban === soalSaatIni.jawabanBenar) {
-        playSound(soundBenar); // Bunyi efek benar
-    } else {
-        playSound(soundSalah); // Bunyi efek salah
+    // Ambil semua tombol pilihan jawaban yang ada di layar
+    const buttons = document.getElementById('quiz-options').getElementsByTagName('button');
+
+    // 1. KUNCI SELURUH TOMBOL (Disabled) agar jawaban tidak bisa diganti
+    for (let btn of buttons) {
+        btn.disabled = true;
     }
 
-    // Hapus efek warna 'selected' pada pilihan lain
-    const buttons = document.getElementById('quiz-options').getElementsByTagName('button');
-    for (let btn of buttons) {
-        btn.classList.remove('selected');
+    // 2. CEK JAWABAN BENAR / SALAH & PUTAR SUARA
+    if (jawaban === soalSaatIni.jawabanBenar) {
+        playSound(soundBenar); //bunyi efek benar
+        btnElement.classList.add('correct'); // Beri warna hijau jika benar
+    } else {
+        playSound(soundSalah); //bunyi efek salah
+        btnElement.classList.add('wrong'); // Beri warna merah jika salah
+        
+        // Tunjukkan jawaban yang benar kepada siswa (Highlight hijau)
+        for (let btn of buttons) {
+            if (btn.innerText.startsWith(soalSaatIni.jawabanBenar)) {
+                btn.classList.add('correct');
+            }
+        }
     }
     
-    // Beri efek warna 'selected' pada tombol yang baru diklik
-    btnElement.classList.add('selected');
-    
-    // Aktifkan tombol Lanjut
+    // 3. Aktifkan tombol Lanjut untuk berpindah soal
     document.getElementById('btn-next').disabled = false;
 }
 

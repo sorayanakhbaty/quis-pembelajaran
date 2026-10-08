@@ -17,11 +17,11 @@ body {
 .app-container {
     background: #ffffff;
     width: 100%;
-    max-width: 800px;
-    min-height: 90vh;
+    max-width: 1000px;
+    min-height: 80vh;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    padding: 30px;
+    padding: 40px;
     overflow: hidden;
 }
 
@@ -564,4 +564,23 @@ th { background-color: #f2f2f2; }
         flex-direction: column;
         gap: 15px;
     }
+}
+
+/* Warna feedback saat jawaban terkunci */
+.options-container button.correct {
+    background-color: #22c55e !important; /* Hijau */
+    color: white !important;
+    border-color: #16a34a !important;
+}
+
+.options-container button.wrong {
+    background-color: #ef4444 !important; /* Merah */
+    color: white !important;
+    border-color: #dc2626 !important;
+}
+
+/* Tampilan tombol yang dikunci (disabled) */
+.options-container button:disabled {
+    cursor: not-allowed;
+    opacity: 0.9;
 }
